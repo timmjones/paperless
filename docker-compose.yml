@@ -26,7 +26,7 @@ services:
       retries: 5
 
   webserver:
-    image: ghcr.io/paperless-ngx/paperless-ngx:2.20.15
+    image: ghcr.io/paperless-ngx/paperless-ngx:3.0.3
     restart: unless-stopped
     depends_on:
       db:
@@ -53,6 +53,9 @@ services:
       PAPERLESS_TIKA_ENDPOINT: http://tika:9998
       USERMAP_UID: 1000
       USERMAP_GID: 1000
+    networks:
+      - default
+      - proxy
 
   gotenberg:
     image: docker.io/gotenberg/gotenberg:8.27
@@ -71,3 +74,8 @@ volumes:
   media:
   pgdata:
   redisdata:
+
+networks:
+  default: {}
+  proxy:
+    external: true
